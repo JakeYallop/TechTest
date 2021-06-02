@@ -23,10 +23,10 @@ namespace Movies.Api.Controllers
 
         }
 
-        [HttpGet("{metadataId}")]
-        public IActionResult GetMetadata(int metadataId)
+        [HttpGet("{movieId}")]
+        public IActionResult GetMetadata(int movieId)
         {
-
+            Database.MoviesMetadata.Where(m => m.Id == movieId).OrderByDescending(m => m.Id).FirstOrDefault();
         }
     }
 }

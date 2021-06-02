@@ -8,12 +8,12 @@ namespace Movies.Api.Database
 {
     public class MoviesDatabase
     {
-        public IEnumerable<MovieMetadata> MoviesMetadata { get; }
-        public IEnumerable<MovieStats> MovieStats { get; }
+        public List<MovieMetadata> MoviesMetadata { get; }
+        public List<MovieStats> MovieStats { get; }
         public MoviesDatabase(IEnumerable<MovieMetadata> movies, IEnumerable<MovieStats> movieMetadata)
         {
-            MoviesMetadata = movies;
-            MovieStats = movieMetadata;
+            MoviesMetadata = movies.ToList();
+            MovieStats = movieMetadata.ToList();
         }
     }
 }

@@ -19,9 +19,10 @@ namespace Movies.Api.Controllers
         public MoviesDatabase Database { get; }
 
         [HttpPost("")]
-        public IActionResult AddMetadata()
+        public IActionResult AddMetadata(MovieMetadata metadata)
         {
-
+            Database.MoviesMetadata.Add(metadata);
+            return CreatedAtAction(metadata.Id.ToString(), metadata);
         }
 
         [HttpGet("{movieId}")]

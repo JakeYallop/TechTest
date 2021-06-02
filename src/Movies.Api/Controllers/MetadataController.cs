@@ -28,7 +28,11 @@ namespace Movies.Api.Controllers
         [HttpGet("{movieId}")]
         public IActionResult GetMetadata(int movieId)
         {
-            var nonUniqueLanguageMovies = Database.MoviesMetadata.Where(m => m.Id == movieId).Where(m => m.IsValid()).OrderByDescending(m => m.Id).ThenBy(x => x.LanguageCode);
+            var nonUniqueLanguageMovies = Database.MoviesMetadata
+                .Where(m => m.Id == movieId)
+                .Where(m => m.IsValid())
+                .OrderByDescending(m => m.Id)
+                .ThenBy(x => x.LanguageCode);
             //select highest movie id from movies
             var seenMovieIds = new HashSet<(int, string?)>();
             var movies = new List<MovieMetadata>();
@@ -40,6 +44,8 @@ namespace Movies.Api.Controllers
                     movies.Add(movie);
                 }
             }
+            //order by language code as required by brief
+            movies = movies.OrderBy(m => m.LanguageCode).ToList();
 
             if (movies.Count == 0)
             {

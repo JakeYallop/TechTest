@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace Movies.Api.Controllers
 {
     [ApiController]
-    public class ApiControllerBase
+    public class ApiControllerBase : ControllerBase
     {
     }
 }

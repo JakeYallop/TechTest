@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Movies.Api.Models
 {
-    public record MovieMetadata(int Id, string? Title, RegionInfo? LanguageCode, TimeSpan Duration, string? Year)
+    public record MovieMetadata(int Id, string? Title, string? LanguageCode, TimeSpan Duration, string? Year)
     {
         //for dotnet 5.0+, we could use the MemberNotNull attribute. Not available in net core 3.1
         public bool IsValid()

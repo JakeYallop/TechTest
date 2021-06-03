@@ -10,10 +10,10 @@ namespace Movies.Api.Database
     {
         public List<MovieMetadata> MoviesMetadata { get; }
         public List<MovieStats> MovieStats { get; }
-        public MoviesDatabase(IEnumerable<MovieMetadata> movies, IEnumerable<MovieStats> movieMetadata)
+        public MoviesDatabase(IEnumerable<MovieMetadata> movieMetadata, IEnumerable<MovieStats> movieStats)
         {
-            MoviesMetadata = movies.ToList();
-            MovieStats = movieMetadata.ToList();
+            MoviesMetadata = movieMetadata.ToList();
+            MovieStats = movieStats.ToList();
         }
     }
 }

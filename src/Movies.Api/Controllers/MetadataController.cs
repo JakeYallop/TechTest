@@ -22,15 +22,16 @@ namespace Movies.Api.Controllers
         public IActionResult AddMetadata(MovieMetadata metadata)
         {
             Database.MoviesMetadata.Add(metadata);
-            return CreatedAtAction(metadata.Id.ToString(), metadata);
+            return CreatedAtAction(metadata.MovieId.ToString(), metadata);
         }
 
         [HttpGet("{movieId}")]
         public IActionResult GetMetadata(int movieId)
         {
             var nonUniqueLanguageMovies = Database.MoviesMetadata
-                .Where(m => m.Id == movieId)
+                .Where(m => m.MovieId == movieId)
                 .Where(m => m.IsValid())
+                //order by metadata id descending, so that we select the latest piece of metadata if we find duplicates below
                 .OrderByDescending(m => m.Id)
                 .ThenBy(x => x.LanguageCode);
             //select highest movie id from movies
@@ -39,7 +40,7 @@ namespace Movies.Api.Controllers
             foreach (var movie in nonUniqueLanguageMovies)
             {
                 //if we've already added a movie with the given id and language, then skip it
-                if (!seenMovieIds.Contains((movie.Id, movie.LanguageCode)))
+                if (!seenMovieIds.Contains((movie.MovieId, movie.LanguageCode)))
                 {
                     movies.Add(movie);
                 }

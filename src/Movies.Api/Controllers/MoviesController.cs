@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Movies.Api.Database;
+using Movies.Api.Models;
 
 namespace Movies.Api.Controllers
 {
@@ -20,14 +21,14 @@ namespace Movies.Api.Controllers
         [HttpGet("/stats")]
         public IActionResult GetStats()
         {
-            var movies = Database.MoviesMetadata.Join(Database.MovieStats, m => m.Id, m => m.Id, (metadata, stats) => new
-            {
-                metadata.Id,
+            var movies = Database.MoviesMetadata.Join(Database.MovieStats, m => m.MovieId, m => m.Id, (metadata, stats) => new MovieStatsData
+            (
+                metadata.MovieId,
                 metadata.Title,
                 stats.AverageWatchDurationS,
                 stats.Watches,
                 metadata.ReleaseYear
-            }).OrderByDescending(m => m.Watches).ThenByDescending(m => m.ReleaseYear);
+            )).OrderByDescending(m => m.Watches).ThenByDescending(m => m.ReleaseYear);
             return Ok(movies);
         }
     }

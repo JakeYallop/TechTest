@@ -20,7 +20,7 @@ namespace Movies.Api.Controllers
 
         private readonly object dbLock = new();
         [HttpPost("")]
-        public IActionResult AddMetadata(MovieData data)
+        public IActionResult AddMetadata([FromBody] MovieData data)
         {
             //avoid race condition - if 2 requests are made simultaneously, they would recieve the same id.
             var metadataId = 1;
@@ -30,7 +30,7 @@ namespace Movies.Api.Controllers
                 {
                     metadataId = Database.MoviesMetadata.Max(x => x.Id) + 1;
                 }
-                var metadata = new MovieMetadata(metadataId, data.MovieId, data.Title, data.LanguageCode, data.Duration, data.ReleaseYear);
+                var metadata = new MovieMetadata(metadataId, data.MovieId, data.Title, data.Language, TimeSpan.Parse(data.Duration!), data.ReleaseYear);
                 Database.MoviesMetadata.Add(metadata);
             }
             //No content
@@ -54,6 +54,7 @@ namespace Movies.Api.Controllers
                 //if we've already added a movie with the given id and language, then skip it
                 if (!seenMovieIds.Contains((movie.MovieId, movie.LanguageCode)))
                 {
+                    seenMovieIds.Add((movie.MovieId, movie.LanguageCode));
                     movies.Add(movie);
                 }
             }

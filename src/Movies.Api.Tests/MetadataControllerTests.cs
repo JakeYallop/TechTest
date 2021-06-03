@@ -15,15 +15,15 @@ namespace Movies.Api.Tests
         {
             var movies = new List<MovieMetadata>()
             {
-                new MovieMetadata(1, 1, "Test 1", "EN", TimeSpan.FromMinutes(1), "2010"),
-                new MovieMetadata(2, 2, "Test 2", "EN", TimeSpan.FromMinutes(2), "2011"),
-                new MovieMetadata(3, 3, "Test 3", "EN", TimeSpan.FromMinutes(3), "2012"),
-                new MovieMetadata(4, 3, "Test 3", "FR", TimeSpan.FromMinutes(3), "2013"),
-                new MovieMetadata(5, 4, "Test 4", "EN", TimeSpan.FromMinutes(4), "2014"),
-                new MovieMetadata(6, 5, "Test 5", "EN", TimeSpan.FromMinutes(5), "2015"),
-                new MovieMetadata(7, 6, "Test 6", "", TimeSpan.FromMinutes(5), "2016"),
-                new MovieMetadata(8, 7, "", "", TimeSpan.FromMinutes(5), "2017"),
-                new MovieMetadata(9, 7, "Test 7", "EN", TimeSpan.FromMinutes(5), "2017"),
+                new MovieMetadata(1, 1, "Test 1", "EN", TimeSpan.FromMinutes(1), 2010),
+                new MovieMetadata(2, 2, "Test 2", "EN", TimeSpan.FromMinutes(2), 2011),
+                new MovieMetadata(3, 3, "Test 3", "EN", TimeSpan.FromMinutes(3), 2012),
+                new MovieMetadata(4, 3, "Test 3", "FR", TimeSpan.FromMinutes(3), 2013),
+                new MovieMetadata(5, 4, "Test 4", "EN", TimeSpan.FromMinutes(4), 2014),
+                new MovieMetadata(6, 5, "Test 5", "EN", TimeSpan.FromMinutes(5), 2015),
+                new MovieMetadata(7, 6, "Test 6", "", TimeSpan.FromMinutes(5), 2016),
+                new MovieMetadata(8, 7, "", "", TimeSpan.FromMinutes(5), 2017),
+                new MovieMetadata(9, 7, "Test 7", "EN", TimeSpan.FromMinutes(5), 2017),
             };
 
             var stats = new List<MovieStats>()
@@ -60,7 +60,7 @@ namespace Movies.Api.Tests
             var database = GetDatabase();
             var controller = new MetadataController(database);
             //Act
-            var result = controller.GetMetadata(8);
+            var result = controller.GetMetadata(1);
             //Assert
             var actionResult = Assert.IsType<OkObjectResult>(result);
             Assert.Equal(200, actionResult.StatusCode);
@@ -72,8 +72,8 @@ namespace Movies.Api.Tests
             //Arrange
             var movies = new List<MovieMetadata>()
             {
-                new MovieMetadata(1, 1, "1", "EN", TimeSpan.FromMinutes(1), "2010"),
-                new MovieMetadata(2, 1, "1", "EN", TimeSpan.FromMinutes(1), "2010"),
+                new MovieMetadata(1, 1, "1", "EN", TimeSpan.FromMinutes(1), 2010),
+                new MovieMetadata(2, 1, "1", "EN", TimeSpan.FromMinutes(1), 2010),
             };
 
             var stats = new List<MovieStats>()
@@ -99,8 +99,8 @@ namespace Movies.Api.Tests
             //Arrange
             var movies = new List<MovieMetadata>()
             {
-                new MovieMetadata(1, 1, "1", "FR", TimeSpan.FromMinutes(1), "2010"),
-                new MovieMetadata(2, 1, "1", "EN", TimeSpan.FromMinutes(1), "2010"),
+                new MovieMetadata(1, 1, "1", "FR", TimeSpan.FromMinutes(1), 2010),
+                new MovieMetadata(2, 1, "1", "EN", TimeSpan.FromMinutes(1), 2010),
             };
 
             var stats = new List<MovieStats>()
@@ -138,8 +138,8 @@ namespace Movies.Api.Tests
             //Arrange
             var movies = new List<MovieMetadata>()
             {
-                new MovieMetadata(1, 1, "1", "FR", TimeSpan.FromMinutes(1), "2010"),
-                new MovieMetadata(2, 1, "1", "", TimeSpan.FromMinutes(1), "2010"),
+                new MovieMetadata(1, 1, "1", "FR", TimeSpan.FromMinutes(1), 2010),
+                new MovieMetadata(2, 1, "1", "", TimeSpan.FromMinutes(1), 2010),
             };
 
             var stats = new List<MovieStats>();

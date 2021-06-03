@@ -59,9 +59,9 @@ namespace Movies.Api
                 .Select(s =>
                 {
                     var movieId = s.Key;
-                    var averageWatchDurationSeconds = s.Average<RawMovieStats>((Func<RawMovieStats, int>)(x => (int)x.WatchDuration));
-                    var watches = s.Count<RawMovieStats>();
-                    return new MovieStats(movieId, TimeSpan.FromMilliseconds(averageWatchDurationSeconds), watches);
+                    var averageWatchDurationMs = s.Average(x => x.WatchDuration);
+                    var watches = s.Count();
+                    return new MovieStats(movieId, TimeSpan.FromMilliseconds(averageWatchDurationMs), watches);
                 });
 
             services.AddSingleton(new MoviesDatabase(movieMetadata, movieStats));

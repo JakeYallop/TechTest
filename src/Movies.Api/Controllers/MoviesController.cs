@@ -25,7 +25,7 @@ namespace Movies.Api.Controllers
             (
                 metadata.MovieId,
                 metadata.Title,
-                stats.AverageWatchDurationS,
+                stats.AverageWatchDurationS.Seconds,
                 stats.Watches,
                 metadata.ReleaseYear
             )).OrderByDescending(m => m.Watches).ThenByDescending(m => m.ReleaseYear);

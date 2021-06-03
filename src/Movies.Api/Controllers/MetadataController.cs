@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
@@ -65,7 +66,17 @@ namespace Movies.Api.Controllers
             {
                 return NotFound();
             }
-            return Ok(movies);
+            var esults = movies.Select(m =>
+                new MovieData()
+                {
+                    MovieId = m.MovieId,
+                    Duration = m.Duration.ToString(@"h\:mm\:ss", CultureInfo.InvariantCulture),
+                    Language = m.LanguageCode,
+                    ReleaseYear = m.ReleaseYear,
+                    Title = m.Title
+                }
+            );
+            return Ok(esults);
         }
     }
 }

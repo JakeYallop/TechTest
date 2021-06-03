@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace Movies.Api.Models
 {
-    public record MovieStatsData(int Id, string? Title, TimeSpan AverageWatchDurationS, int Watches, int ReleaseYear)
+    public record MovieStatsData(int MovieId, string? Title, int AverageWatchDurationS, int Watches, int ReleaseYear)
     {
     }
 }

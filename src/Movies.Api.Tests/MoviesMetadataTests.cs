@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Movies.Api.Models;
+using Movies.Api.Database;
 using Xunit;
 
 namespace Movies.Api.Tests

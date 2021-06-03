@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Movies.Api.Models
+namespace Movies.Api.Database
 {
     public record MovieStats(int MovieId, TimeSpan AverageWatchDurationS, int Watches);
 }

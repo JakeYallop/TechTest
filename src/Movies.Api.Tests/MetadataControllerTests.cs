@@ -4,7 +4,6 @@ using System.Linq;
 using Microsoft.AspNetCore.Mvc;
 using Movies.Api.Controllers;
 using Movies.Api.Database;
-using Movies.Api.Models;
 using Xunit;
 
 namespace Movies.Api.Tests

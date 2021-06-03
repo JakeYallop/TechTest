@@ -9,6 +9,7 @@ using Microsoft.Extensions.Logging;
 using Movies.Api.Database;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -27,7 +28,17 @@ namespace Movies.Api
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
-            services.AddSingleton<MoviesDatabase>();
+            var metadataPath = Configuration["Assets:MetadataFile"];
+            var statsPath = Configuration["Assets:StatsFile"];
+            if (metadataPath is null)
+            {
+                metadataPath = Path.GetFullPath("./Assets/metadata.csv", AppContext.BaseDirectory);
+            }
+            if (statsPath is null)
+            {
+                statsPath = Path.GetFullPath("./Assets/stats.csv", AppContext.BaseDirectory);
+            }
+            services.AddMoviesDatabase(metadataPath, statsPath);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

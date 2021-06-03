@@ -18,10 +18,10 @@ namespace Movies.Api.Controllers
 
         public MoviesDatabase Database { get; }
 
-        [HttpGet("/stats")]
+        [HttpGet("stats")]
         public IActionResult GetStats()
         {
-            var movies = Database.MoviesMetadata.Join(Database.MovieStats, m => m.MovieId, m => m.Id, (metadata, stats) => new MovieStatsData
+            var movies = Database.MoviesMetadata.Join(Database.MovieStats, m => m.MovieId, m => m.MovieId, (metadata, stats) => new MovieStatsData
             (
                 metadata.MovieId,
                 metadata.Title,

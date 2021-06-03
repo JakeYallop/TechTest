@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using Microsoft.AspNetCore.Mvc;
 using Movies.Api.Controllers;
 using Movies.Api.Database;
@@ -129,6 +130,30 @@ namespace Movies.Api.Tests
                     Assert.Equal(1, m.MovieId);
                     Assert.Equal("FR", m.LanguageCode);
                 });
+        }
+
+        [Fact]
+        public void Get_MovieId_DoesNotReturnInvalidData()
+        {
+            //Arrange
+            var movies = new List<MovieMetadata>()
+            {
+                new MovieMetadata(1, 1, "1", "FR", TimeSpan.FromMinutes(1), "2010"),
+                new MovieMetadata(2, 1, "1", "", TimeSpan.FromMinutes(1), "2010"),
+            };
+
+            var stats = new List<MovieStats>();
+
+            var database = new MoviesDatabase(movies, stats);
+            var controller = new MetadataController(database);
+            //Act
+            var result = controller.GetMetadata(1);
+
+            //Assert
+            var actionResult = Assert.IsType<OkObjectResult>(result);
+            var data = Assert.IsAssignableFrom<IEnumerable<MovieMetadata>>(actionResult.Value);
+            Assert.Equal(1, data.Count()!);
+            Assert.Equal(1, data.ElementAt(0).Id);
         }
     }
 }

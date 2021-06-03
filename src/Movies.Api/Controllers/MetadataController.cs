@@ -18,11 +18,23 @@ namespace Movies.Api.Controllers
 
         public MoviesDatabase Database { get; }
 
+        private readonly object dbLock = new();
         [HttpPost("")]
-        public IActionResult AddMetadata(MovieMetadata metadata)
+        public IActionResult AddMetadata(MovieData data)
         {
-            Database.MoviesMetadata.Add(metadata);
-            return CreatedAtAction(metadata.MovieId.ToString(), metadata);
+            //avoid race condition - if 2 requests are made simultaneously, they would recieve the same id.
+            var metadataId = 1;
+            lock (dbLock)
+            {
+                if (!Database.MoviesMetadata.IsEmpty)
+                {
+                    metadataId = Database.MoviesMetadata.Max(x => x.Id) + 1;
+                }
+                var metadata = new MovieMetadata(metadataId, data.MovieId, data.Title, data.LanguageCode, data.Duration, data.ReleaseYear);
+                Database.MoviesMetadata.Add(metadata);
+            }
+            //No content
+            return StatusCode(204);
         }
 
         [HttpGet("{movieId}")]

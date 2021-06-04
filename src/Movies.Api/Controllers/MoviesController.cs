@@ -21,14 +21,18 @@ namespace Movies.Api.Controllers
         [HttpGet("stats")]
         public IActionResult GetStats()
         {
-            var movies = Database.MoviesMetadata.Join(Database.MovieStats, m => m.MovieId, m => m.MovieId, (metadata, stats) => new MovieStatsData
-            (
-                metadata.MovieId,
-                metadata.Title,
-                stats.AverageWatchDurationS.Seconds,
-                stats.Watches,
-                metadata.ReleaseYear
-            )).OrderByDescending(m => m.Watches).ThenByDescending(m => m.ReleaseYear);
+            var movies = Database.MoviesMetadata.GroupBy(x => x.MovieId)
+                //select the first metadata record for each movie, defaulting to the english title
+                .Select(x => x.FirstOrDefault(x => x.LanguageCode == "EN") ?? x.First())
+                .Join(Database.MovieStats, m => m.MovieId, m => m.MovieId, (metadata, stats) => new MovieStatsData
+                (
+                    metadata.MovieId,
+                    metadata.Title,
+                    (int)stats.AverageWatchDurationS.TotalSeconds,
+                    stats.Watches,
+                    metadata.ReleaseYear
+                )).OrderByDescending(m => m.Watches).ThenByDescending(m => m.ReleaseYear);
+
             return Ok(movies);
         }
     }

@@ -59,7 +59,7 @@ namespace Movies.Api
                 .Select(s =>
                 {
                     var movieId = s.Key;
-                    var averageWatchDurationMs = s.Average(x => x.WatchDuration);
+                    var averageWatchDurationMs = Math.Floor(s.Average(x => x.WatchDuration));
                     var watches = s.Count();
                     return new MovieStats(movieId, TimeSpan.FromMilliseconds(averageWatchDurationMs), watches);
                 });
